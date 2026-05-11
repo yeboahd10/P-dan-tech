@@ -1,7 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function Navbar({ logo }) {
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    if (!menuOpen) {
+      document.body.style.overflow = ''
+      return
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [menuOpen])
 
   const links = [
     ['Services', '#services'],
@@ -12,7 +26,7 @@ function Navbar({ logo }) {
   ]
 
   return (
-    <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
+    <nav className="relative z-50 mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
       <div className="flex items-center gap-3">
         <img
           src={logo}
@@ -44,7 +58,7 @@ function Navbar({ logo }) {
 
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="flex md:hidden flex-col gap-1.5"
+        className="relative z-50 flex flex-col gap-1.5 md:hidden"
         aria-label="Toggle menu"
       >
         <span className={`h-0.5 w-6 bg-cyan-300 transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
@@ -53,31 +67,38 @@ function Navbar({ logo }) {
       </button>
 
       {menuOpen && (
-        <>
-          <div
-            className="fixed inset-0 z-[9998] bg-black/50 md:hidden"
-            onClick={() => setMenuOpen(false)}
-          />
-          <div className="fixed inset-x-0 top-20 z-[9999] flex flex-col gap-4 border-t border-slate-200 bg-white px-6 py-4 md:hidden">
-          {links.map(([label, href]) => (
+        <div className="fixed inset-0 z-[60] bg-black px-6 pb-8 pt-24 md:hidden">
+          <div className="mb-4 flex items-center justify-between border-b border-slate-700 pb-3">
+            <p className="text-sm font-semibold tracking-[0.2em] text-white">MENU</p>
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="rounded-full border border-slate-500 px-3 py-1 text-xs font-semibold text-white"
+              aria-label="Close menu"
+            >
+              Close
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            {links.map(([label, href]) => (
+              <a
+                key={label}
+                href={href}
+                className="rounded-2xl border border-slate-700 bg-black px-4 py-3 text-sm font-medium text-white transition hover:border-cyan-300 hover:text-cyan-300"
+                onClick={() => setMenuOpen(false)}
+              >
+                {label}
+              </a>
+            ))}
             <a
-              key={label}
-              href={href}
-              className="text-sm font-medium text-slate-800 transition hover:text-cyan-600"
+              href="#contact"
+              className="mt-2 rounded-full border border-cyan-400 bg-cyan-400 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-cyan-500"
               onClick={() => setMenuOpen(false)}
             >
-              {label}
+              Start a Project
             </a>
-          ))}
-          <a
-            href="#contact"
-            className="mt-2 rounded-full border border-cyan-400 bg-cyan-400 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-cyan-500"
-            onClick={() => setMenuOpen(false)}
-          >
-            Start a Project
-          </a>
+          </div>
         </div>
-        </>
       )}
     </nav>
   )

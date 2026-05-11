@@ -1,6 +1,6 @@
 function ServicesSection({ services }) {
   return (
-    <section id="services" className="mt-24">
+    <section id="services" className="mt-0 sm:mt-24">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.4em] text-cyan-300">Our Expertise</p>

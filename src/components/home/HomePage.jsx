@@ -102,11 +102,11 @@ function HomePage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.22),_transparent_32%),radial-gradient(circle_at_85%_18%,_rgba(59,130,246,0.2),_transparent_26%),linear-gradient(135deg,_#020617_0%,_#0f172a_48%,_#020617_100%)]" />
         <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.15)_1px,transparent_1px)] [background-size:72px_72px]" />
 
-        <header className="relative z-10">
+        <header className="relative z-50">
           <Navbar logo={logo} />
         </header>
 
-        <main className="relative z-10 mx-auto max-w-7xl px-6 pb-16 pt-8 lg:px-8 lg:pb-24 lg:pt-10">
+        <main className="relative z-10 mx-auto max-w-7xl px-6 pb-16 pt-4 sm:pt-8 lg:px-8 lg:pb-24 lg:pt-10">
           <div className="hidden sm:block">
             <HeroSection
               heroImage={heroImage}
