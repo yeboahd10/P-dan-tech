@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Navbar({ logo }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -18,11 +19,11 @@ function Navbar({ logo }) {
   }, [menuOpen])
 
   const links = [
-    ['Services', '#services'],
-    ['Portfolio', '#portfolio'],
-    ['About', '#about'],
-    ['Testimonials', '#testimonials'],
-    ['Contact', '#contact'],
+    { label: 'Services', href: '#services', type: 'anchor' },
+    { label: 'Portfolio', href: '/projects', type: 'route' },
+    { label: 'About', href: '#about', type: 'anchor' },
+    { label: 'Testimonials', href: '#testimonials', type: 'anchor' },
+    { label: 'Contact', href: '#contact', type: 'anchor' },
   ]
 
   return (
@@ -40,10 +41,16 @@ function Navbar({ logo }) {
       </div>
 
       <div className="hidden items-center gap-8 text-sm font-medium text-slate-200 md:flex">
-        {links.map(([label, href]) => (
-          <a key={label} href={href} className="transition hover:text-cyan-300">
-            {label}
-          </a>
+        {links.map((link) => (
+          link.type === 'route' ? (
+            <Link key={link.label} to={link.href} className="transition hover:text-cyan-300">
+              {link.label}
+            </Link>
+          ) : (
+            <a key={link.label} href={link.href} className="transition hover:text-cyan-300">
+              {link.label}
+            </a>
+          )
         ))}
       </div>
 
@@ -80,15 +87,26 @@ function Navbar({ logo }) {
           </div>
 
           <div className="flex flex-col gap-2">
-            {links.map(([label, href]) => (
-              <a
-                key={label}
-                href={href}
-                className="rounded-2xl border border-slate-700 bg-black px-4 py-3 text-sm font-medium text-white transition hover:border-cyan-300 hover:text-cyan-300"
-                onClick={() => setMenuOpen(false)}
-              >
-                {label}
-              </a>
+            {links.map((link) => (
+              link.type === 'route' ? (
+                <Link
+                  key={link.label}
+                  to={link.href}
+                  className="rounded-2xl border border-slate-700 bg-black px-4 py-3 text-sm font-medium text-white transition hover:border-cyan-300 hover:text-cyan-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="rounded-2xl border border-slate-700 bg-black px-4 py-3 text-sm font-medium text-white transition hover:border-cyan-300 hover:text-cyan-300"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              )
             ))}
             <a
               href="#contact"
